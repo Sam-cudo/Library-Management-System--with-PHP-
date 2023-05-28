@@ -1,18 +1,18 @@
 <?php
 
-    $errors = array('memberId' => '', 'password' => '');
-    $memberId = $password = '';
+    $errors = array('adminId' => '', 'password' => '');
+    $adminId = $password = '';
 
     if(isset($_POST['Submit']))
     {
         //Member ID validation
-        if(empty($_POST['MemberID']))
-            $errors['memberId'] = "Member ID is required <br />";
+        if(empty($_POST['AdminID']))
+            $errors['adminId'] = "Admin ID is required <br />";
         else
         {
-            $memberId = htmlspecialchars($_POST['MemberID']);
-            if(!filter_var($memberId, FILTER_VALIDATE_EMAIL))
-            $errors['memberId'] = "Please enter a valid Member ID <br />";
+            $adminId = htmlspecialchars($_POST['AdminID']);
+            if(!filter_var($adminId, FILTER_VALIDATE_EMAIL))
+            $errors['adminId'] = "Please enter a valid Member ID <br />";
         }    
 
         //Password Validation
@@ -23,7 +23,7 @@
 
         //Validating user from database
         include('conn.php');
-        $sql = "SELECT * FROM member_master_tbl WHERE member_id = '$memberId' AND password = '$password';";
+        $sql = "SELECT * FROM admin_login_tbl WHERE username = '$adminId' AND password = '$password';";
         $stmt = sqlsrv_query($conn, $sql);
         if( $stmt === false ) 
             die( print_r( sqlsrv_errors(), true));
@@ -32,10 +32,8 @@
 
         if(!empty($result))
         {
-            setcookie('role', 'member', time() + 86400);
-            setcookie('name', $result['full_name'], time() + 86400);
-            setcookie('memberId', $result['member_id'], time() + 86400);
-            setcookie('status', $result['account_status'], time() + 86400);
+            setcookie('role', 'admin', time() + 86400);
+            setcookie('adminId', $result['username'], time() + 86400);
             header('Location: index.php');
         }
         else
@@ -110,7 +108,7 @@
                         <div class="row">
                             <div class="col">
                                 <center>
-                                    <img src="imgs/generaluser.png" width="150" />
+                                    <img src="imgs/adminuser.png" width="150" />
                                 </center>
                             </div>
                         </div>
@@ -128,10 +126,10 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <form action="userlogin.php" method="POST">
+                                <form action="adminlogin.php" method="POST">
                                     <div class="form-group">
-                                        <input class="form-control" type="text" name="MemberID" placeholder="Member ID" value="<?php echo $memberId; ?>"></input>
-                                        <div style="color: red"><?php echo $errors['memberId']; ?></div>
+                                        <input class="form-control" type="text" name="AdminID" placeholder="Admin ID" value="<?php echo $adminId; ?>"></input>
+                                        <div style="color: red"><?php echo $errors['adminId']; ?></div>
                                     </div>
                                     <div class="form-group">
                                     <input class="form-control" type="password" name="Password" placeholder="Password" value="<?php echo $password; ?>"></input>
@@ -139,11 +137,6 @@
                                     </div>
                                     <div class="form-group">
                                         <input style="background-color: #009688" class="btn btn-success btn-block" type="submit" name="Submit" value="Log-In"></input>
-                                    </div>
-                                    <div class="form-group">
-                                        <a href="register.aspx" style="text-decoration:none;">
-                                            <input id="Button2" class="btn btn-info btn-block" type="button" value="Register" />
-                                        </a>
                                     </div>
                                 </form>
                             </div>
