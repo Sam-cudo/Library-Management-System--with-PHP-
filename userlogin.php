@@ -38,6 +38,8 @@
             setcookie('status', $result['account_status'], time() + 86400);
             header('Location: index.php');
         }
+        else
+            $showModal = "true";
 
         sqlsrv_free_stmt($stmt);
         sqlsrv_close($conn);
@@ -48,6 +50,56 @@
 <!DOCTYPE html>
 <html>
     <?php include('templates/header.php') ?>
+
+    <?php 
+    if(!empty($showModal))
+    {
+        $title = "Invalid Credentials!!!";
+        $data = "Please try again.";
+    ?>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+	    	$("#Modal").modal("show");
+	    });
+    </script>
+
+    <?php }?>
+
+<!-- Error Modal -->
+    <div>
+        <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalTitle" aria-hidden="true">
+            <div class="modal-dialog" style="background-color: #eeeeee">
+                <div class="modal-content" style="background-color: #eeeeee">
+                    <div class="modal-header">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <center>
+                                        <h4 class="modal-title" style="color: #009688"><?php echo $title; ?></h4>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <center>
+                                        <h5 class="modal-data"><?php echo $data; ?></h5>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <div class="row">
