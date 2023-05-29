@@ -46,10 +46,14 @@ if(isset($_POST['Logout']))
     <script src="bootstrap/js/popper.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="datatables/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".table").prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable();
+            $(".table").each(function() {
+                var $thead = $("<thead></thead>").append($(this).find("tr:first"));
+                $(this).prepend($thead).DataTable();
+            });         
         });
     </script>
 

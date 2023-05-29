@@ -308,15 +308,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                            while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )):
-                                        ?>
+                                        <?php while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )): ?>
                                         <!-- Logic for deafulters (red color) -->
-                                        <?php $date = date('Y/m/d', time());
+                                        <?php $date = date('Y-m-d', time());
                                             if($row['due_date'] > $date): ?>
                                                 <tr>
                                             <?php endif; ?>
-                                        <?php $date = date('Y/m/d', time());
+                                        <?php $date = date('Y-m-d', time());
                                             if($row['due_date'] < $date): ?>
                                                 <tr class="table-danger">
                                         <?php endif; ?>
