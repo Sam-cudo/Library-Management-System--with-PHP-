@@ -311,7 +311,15 @@
                                     <?php
                                         while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )):
                                     ?>
-                                    <tr>
+                                    <!-- Logic for deafulters (red color) -->
+                                    <?php $date = date('Y/m/d', time());
+                                        if($row['due_date'] > $date): ?>
+                                            <tr>
+                                        <?php endif; ?>
+                                    <?php $date = date('Y/m/d', time());
+                                        if($row['due_date'] < $date): ?>
+                                            <tr class="table-danger">
+                                    <?php endif; ?>
                                         <td><?php echo htmlspecialchars($row['book_id']) ?></td>
                                         <td><?php echo htmlspecialchars($row['book_name']) ?></td>
                                         <td><?php echo htmlspecialchars($row['issue_date']) ?></td>
