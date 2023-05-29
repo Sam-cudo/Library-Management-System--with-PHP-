@@ -46,6 +46,13 @@ if(isset($_POST['Logout']))
     <script src="bootstrap/js/popper.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="datatables/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".table").prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable();
+        });
+    </script>
+
 </head>
 <body>
     <!-- NavBar -->
@@ -86,7 +93,7 @@ if(isset($_POST['Logout']))
                         </form>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" id="member" href="index.php" style="color: white; cursor: pointer">Hello <?php echo $_COOKIE['name']; ?></a>
+                        <a class="nav-link" id="member" href="profile.php" style="color: white; cursor: pointer">Hello <?php echo $_COOKIE['name']; ?></a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" id="admin" href="#" style="color: white; cursor: pointer">Hello Admin</a>

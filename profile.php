@@ -1,7 +1,96 @@
+<?php
+    $errors = array('fullName' => '','dob' => '', 'newPassword' => '', 'conPassword' => '');
+    $fullName = $dob = $contact = $status = $password = $newPassword = $conPassword = $state = $city = $pincode = '';
+
+    $memberId = $_COOKIE['memberId'];
+
+    //Load Member Details
+    include('conn.php');
+    $sql = "SELECT * FROM member_master_tbl WHERE member_id = '$memberId';";
+    $stmt = sqlsrv_query($conn, $sql);
+    if( $stmt === false ) 
+        die( print_r( sqlsrv_errors(), true));
+
+    $result = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC );
+
+    if(!empty($result))
+    {
+        $fullName = $result['full_name'];
+        $dob = $result['dob'];
+        $contact = $result['contact_no'];
+        $status = $result['account_status'];
+        $password = $result['password'];
+        $state = $result['state'];
+        $city = $result['city'];
+        $pincode = $result['pincode'];
+    }   
+
+    sqlsrv_free_stmt($stmt);
+    sqlsrv_close($conn);
+
+    //Update Member Details
+    if(isset($_POST['Submit']))
+    {
+        //Full Name validation
+        if(empty($_POST['FullName']))
+            $errors['fullName'] = "Full Name is required";
+        else
+            $fullName = htmlspecialchars($_POST['FullName']);
+
+        //DOB validation
+        if(empty($_POST['DOB']))
+            $errors['dob'] = "Date of Birth is required";
+        else
+            $dob = htmlspecialchars($_POST['DOB']);  
+
+        if(!empty($_POST['NewPassword']))
+            $newPassword = htmlspecialchars($_POST['NewPassword']);
+        else
+            $newPassword = $password;
+
+        //Confirm Password Validation
+        $conPassword = htmlspecialchars($_POST['ConPassword']);
+        if($_POST['NewPassword'] !== $_POST['ConPassword'])
+            $errors['conPassword'] = "Confirm Password and Password should match";
+
+        if(!empty($_POST['State']))
+            $state = htmlspecialchars($_POST['State']);
+
+        $city = htmlspecialchars($_POST['City']);
+        $pincode = htmlspecialchars($_POST['PinCode']);
+
+        include('conn.php');
+        $sql = "UPDATE member_master_tbl SET full_name= (?), dob= (?), password= (?), state= (?), city= (?), pincode= (?), account_status= (?) WHERE member_id= (?) ;";
+        $params = array($fullName, $dob, $newPassword, $state, $city, $pincode, "Pending", $memberId);
+
+        $stmt = sqlsrv_query( $conn, $sql, $params);
+        if( $stmt === false )
+            die( print_r( sqlsrv_errors(), true));
+
+        $showModal = "true";
+        sqlsrv_free_stmt($stmt);
+        sqlsrv_close($conn);
+    }
+
+?>
+
 <!DOCTYPE html>
 <html>
 
     <?php include('templates/header.php') ?>
+
+    <?php 
+        if(!array_filter($errors) && !empty($showModal))
+        {
+            $title = "Profile Updated!!!";
+            $data = "Your account will be activated after verification.";
+    ?>
+    <script type="text/javascript">
+        $(document).ready(function(){
+	    	$("#Modal").modal("show");
+	    });
+    </script>
+    <?php }?>
 
     <div>
         <!-- Modal -->
@@ -16,7 +105,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                     <center>
-                                        <h4 class="modal-title" style="color: #009688"></h4>
+                                        <h4 class="modal-title" style="color: #009688"><?php echo $title; ?></h4>
                                     </center>
                                 </div>
                             </div>
@@ -27,7 +116,7 @@
                             <div class="row">
                                 <div class="col">
                                     <center>
-                                        <h5 class="modal-data"></h5>
+                                        <h5 class="modal-data"><?php echo $data; ?></h5>
                                     </center>
                                 </div>
                             </div>
@@ -41,7 +130,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-5">
-                <form>
+                <form action="profile.php" method="POST">
                     <br />
                     <div class="card">
                         <div class="card-body" style="background-color: #eeeeee">
@@ -57,7 +146,7 @@
                                     <center>
                                         <h4 style="color: #009688">Your Profile</h4>
                                         <span>Account Status: </span>
-                                        <label class="badge badge-pill badge-info">Pending</label>
+                                        <label class="badge badge-pill badge-info"><?php echo $status; ?></label>
                                     </center>
                                 </div>
                             </div>
@@ -86,13 +175,13 @@
                                 <div class="col-md-6">
                                     <label>Contact Number</label>
                                     <div class="form-group">
-                                        <input class="form-control" type="text" name="Contact" placeholder="Enter phone number" value="<?php echo $contact; ?>" readonly></input>
+                                        <input class="form-control" type="text" name="Contact" placeholder="Phone number" value="<?php echo $contact; ?>" readonly></input>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label>E-mail ID</label>
                                     <div class="form-group">
-                                        <input class="form-control" type="email" name="MemberID" placeholder="E-mail address (will be your Member ID)" value="<?php echo $memberId; ?>" readonly></input>
+                                        <input class="form-control" type="email" name="MemberID" placeholder="E-mail address" value="<?php echo $memberId; ?>" readonly></input>
                                     </div>
                                 </div>
                             </div>
@@ -100,20 +189,20 @@
                                 <div class="col-md-4">
                                     <label>Old Password</label>
                                     <div class="form-group">
-                                        <input class="form-control" type="password" name="Password" placeholder="Enter your password" value="<?php echo $password; ?>"></input>
+                                        <input class="form-control" type="password" name="Password" placeholder="Old password" value="<?php echo $password; ?>" readonly></input>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label>New Password</label>
                                     <div class="form-group">
-                                        <input class="form-control" type="password" name="NewPassword" placeholder="Enter new password" value="<?php echo $newPassword; ?>"></input>
+                                        <input class="form-control" type="password" name="NewPassword" placeholder="Enter new password"></input>
                                         <div style="color: red"><?php echo $errors['newPassword']; ?></div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label>Confirm New Password</label>
                                     <div class="form-group">
-                                        <input class="form-control" type="password" name="ConPassword" placeholder="Enter your password again" value="<?php echo $conPassword; ?>"></input>
+                                        <input class="form-control" type="password" name="ConPassword" placeholder="Enter new password again"></input>
                                         <div style="color: red"><?php echo $errors['conPassword']; ?></div>
                                     </div>
                                 </div>
@@ -204,7 +293,37 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                
+                                <?php 
+                                    include('conn.php');
+                                    $sql = "SELECT * FROM book_issue_tbl WHERE member_id = '$memberId';";
+                                    $stmt = sqlsrv_query($conn, $sql);    
+                                ?>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr class="table-success">
+                                          <th scope="col">Book ID</th>
+                                          <th scope="col">Book Name</th>
+                                          <th scope="col">Issue Date</th>
+                                          <th scope="col">Due Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                        while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )):
+                                    ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($row['book_id']) ?></td>
+                                        <td><?php echo htmlspecialchars($row['book_name']) ?></td>
+                                        <td><?php echo htmlspecialchars($row['issue_date']) ?></td>
+                                        <td><?php echo htmlspecialchars($row['due_date']) ?></td>
+                                    </tr>
+                                    <?php endwhile; ?>
+                                    </tbody>
+                                </table>
+                                <?php 
+                                    sqlsrv_free_stmt($stmt);
+                                    sqlsrv_close($conn);
+                                ?>
                             </div>
                         </div>
                     </div>

@@ -28,7 +28,13 @@
                                     $sql = "SELECT * FROM book_master_tbl;";
                                     $stmt = sqlsrv_query($conn, $sql);    
                                 ?>
-                                <table>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr class="table-success">
+                                          <th scope="col">Book Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                     <?php
                                         while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )):
                                             $str = htmlspecialchars($row['book_img_link']);
@@ -87,15 +93,11 @@
                                                         <img src="<?php echo $row['book_img_link']  ?>" width="100" height="140">
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <hr />
-                                                    </div>
-                                                </div>
                                             </td>
                                         </div>
                                     </tr>
                                     <?php endwhile; ?>
+                                    </tbody>
                                 </table>
                                 <?php 
                                     sqlsrv_free_stmt($stmt);
