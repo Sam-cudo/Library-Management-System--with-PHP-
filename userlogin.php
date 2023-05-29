@@ -7,17 +7,17 @@
     {
         //Member ID validation
         if(empty($_POST['MemberID']))
-            $errors['memberId'] = "Member ID is required <br />";
+            $errors['memberId'] = "Member ID is required";
         else
         {
             $memberId = htmlspecialchars($_POST['MemberID']);
             if(!filter_var($memberId, FILTER_VALIDATE_EMAIL))
-            $errors['memberId'] = "Please enter a valid Member ID <br />";
+                $errors['memberId'] = "Please enter a valid Member ID";
         }    
 
         //Password Validation
         if(empty($_POST['Password']))
-            $errors['password'] = "Password is required <br />";
+            $errors['password'] = "Password is required";
         else
             $password = htmlspecialchars($_POST['Password']);
 
@@ -46,24 +46,21 @@
     }
 ?>
 
-
 <!DOCTYPE html>
 <html>
     <?php include('templates/header.php') ?>
 
     <?php 
-    if(!array_filter($errors) && !empty($showModal))
-    {
-        $title = "Invalid Credentials!!!";
-        $data = "Please try again.";
+        if(!array_filter($errors) && !empty($showModal))
+        {
+            $title = "Invalid Credentials!!!";
+            $data = "Please try again.";
     ?>
-
     <script type="text/javascript">
         $(document).ready(function(){
 	    	$("#Modal").modal("show");
 	    });
     </script>
-
     <?php }?>
 
 <!-- Error Modal -->
@@ -135,13 +132,13 @@
                                     </div>
                                     <div class="form-group">
                                     <input class="form-control" type="password" name="Password" placeholder="Password" value="<?php echo $password; ?>"></input>
-                                    <div style="color: red"><?php echo $errors['password']; ?></div>
+                                        <div style="color: red"><?php echo $errors['password']; ?></div>
                                     </div>
                                     <div class="form-group">
                                         <input style="background-color: #009688" class="btn btn-success btn-block" type="submit" name="Submit" value="Log-In"></input>
                                     </div>
                                     <div class="form-group">
-                                        <a href="register.aspx" style="text-decoration:none;">
+                                        <a href="register.php" style="text-decoration:none;">
                                             <input id="Button2" class="btn btn-info btn-block" type="button" value="Register" />
                                         </a>
                                     </div>

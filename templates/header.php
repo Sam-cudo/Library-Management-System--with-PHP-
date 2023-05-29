@@ -78,7 +78,7 @@ if(isset($_POST['Logout']))
                         <a class="nav-link" id="AdminLogin" href="adminlogin.php" style="color: white; cursor: pointer">Admin Login</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" id="SignUp" href="index.php" style="color: white; cursor: pointer">Sign Up</a>
+                        <a class="nav-link" id="SignUp" href="register.php" style="color: white; cursor: pointer">Sign Up</a>
                     </li>
                     <li class="nav-item active">
                         <form action="#" method="POST">
