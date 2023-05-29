@@ -312,7 +312,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <input type="checkbox" name="Terms" value="accepted">
-                                        <label for="vehicle1"> I agree to the Privacy Policy and Terms and Conditions of using E-Library.</label>
+                                        <label for="Terms"> I agree to the Privacy Policy and Terms and Conditions of using E-Library.</label>
                                         <div style="color: red"><?php echo $errors['terms']; ?></div>
                                     </div>
                                 </div>
