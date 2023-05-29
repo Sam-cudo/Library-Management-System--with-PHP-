@@ -308,24 +308,24 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
-                                        while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )):
-                                    ?>
-                                    <!-- Logic for deafulters (red color) -->
-                                    <?php $date = date('Y/m/d', time());
-                                        if($row['due_date'] > $date): ?>
-                                            <tr>
+                                        <?php
+                                            while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC )):
+                                        ?>
+                                        <!-- Logic for deafulters (red color) -->
+                                        <?php $date = date('Y/m/d', time());
+                                            if($row['due_date'] > $date): ?>
+                                                <tr>
+                                            <?php endif; ?>
+                                        <?php $date = date('Y/m/d', time());
+                                            if($row['due_date'] < $date): ?>
+                                                <tr class="table-danger">
                                         <?php endif; ?>
-                                    <?php $date = date('Y/m/d', time());
-                                        if($row['due_date'] < $date): ?>
-                                            <tr class="table-danger">
-                                    <?php endif; ?>
-                                        <td><?php echo htmlspecialchars($row['book_id']) ?></td>
-                                        <td><?php echo htmlspecialchars($row['book_name']) ?></td>
-                                        <td><?php echo htmlspecialchars($row['issue_date']) ?></td>
-                                        <td><?php echo htmlspecialchars($row['due_date']) ?></td>
-                                    </tr>
-                                    <?php endwhile; ?>
+                                            <td><?php echo htmlspecialchars($row['book_id']) ?></td>
+                                            <td><?php echo htmlspecialchars($row['book_name']) ?></td>
+                                            <td><?php echo htmlspecialchars($row['issue_date']) ?></td>
+                                            <td><?php echo htmlspecialchars($row['due_date']) ?></td>
+                                        </tr>
+                                        <?php endwhile; ?>
                                     </tbody>
                                 </table>
                                 <?php 
