@@ -9,11 +9,7 @@
         if(empty($_POST['AdminID']))
             $errors['adminId'] = "Admin ID is required <br />";
         else
-        {
             $adminId = htmlspecialchars($_POST['AdminID']);
-            if(!filter_var($adminId, FILTER_VALIDATE_EMAIL))
-            $errors['adminId'] = "Please enter a valid Member ID <br />";
-        }    
 
         //Password Validation
         if(empty($_POST['Password']))
@@ -34,7 +30,7 @@
         {
             setcookie('role', 'admin', time() + 86400);
             setcookie('adminId', $result['username'], time() + 86400);
-            header('Location: index.php');
+            header('Location: admindashboard.php');
         }
         else
             $showModal = "true";

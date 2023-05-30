@@ -2,6 +2,7 @@
 
     $borrowed = $available = $members= $active = $pending = $deactive = 0;
     include('conn.php');
+
     //Borrowed books count
     $sql = 'SELECT * FROM book_issue_tbl';
     $stmt = sqlsrv_query($conn, $sql);
@@ -9,6 +10,7 @@
     {
         $borrowed++;
     }
+
     //Avaialable books count
     $sql = 'SELECT * FROM book_master_tbl';
     $stmt = sqlsrv_query($conn, $sql);
@@ -16,6 +18,7 @@
     {
         $available += $row['current_stock'];
     }
+
     //Total Members count
     $sql = 'SELECT * FROM member_master_tbl';
     $stmt = sqlsrv_query($conn, $sql);
@@ -23,6 +26,7 @@
     {
         $members++;
     }
+
     //Active Members count
     $sql = "SELECT * FROM [member_master_tbl] WHERE account_status='Active'";
     $stmt = sqlsrv_query($conn, $sql);
@@ -30,6 +34,7 @@
     {
         $active++;
     }
+
     //Pending Members count
     $sql = "SELECT * FROM [member_master_tbl] WHERE account_status='Pending'";
     $stmt = sqlsrv_query($conn, $sql);
@@ -37,15 +42,20 @@
     {
         $pending++;
     }
+
     //Deactive Members count
     $deactive = $members - $active - $pending;
 
+    //Data array for graph
     $data = array($active,$pending,$deactive);
 ?>
 
 <!DOCTYPE html>
 <html>
     <?php include('templates/header.php'); ?>
+    <?php include('templates/sidebar.php'); ?>
+    <div class="content" id="content">
+    <button class="toggleButton" id="toggleButton"></button>
     <div class="container">
         <div class="row">
             <div class="col-md-4">
@@ -168,7 +178,6 @@
                             <div class="col">
                                 <center>
                                     <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-
                                     <script>
                                         var xValues = ["Active", "Pending", "Deactive"];
                                         <?php 
@@ -302,6 +311,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <?php include ('templates/footer.php'); ?>
 </html>
