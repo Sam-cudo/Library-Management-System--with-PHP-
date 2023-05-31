@@ -214,15 +214,15 @@
                         <form action="register.php" method="POST">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>Full Name *</label>
                                     <div class="form-group">
+                                        <label>Full Name *</label>
                                         <input class="form-control" type="text" name="FullName" placeholder="Enter Full Name" value="<?php echo $fullName; ?>"></input>
                                         <div style="color: red"><?php echo $errors['fullName']; ?></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Date of Birth *</label>
                                     <div class="form-group">
+                                        <label>Date of Birth *</label>
                                         <input class="form-control" type="date" name="DOB" placeholder="Enter DOB" value="<?php echo $dob; ?>"></input>
                                         <div style="color: red"><?php echo $errors['dob']; ?></div>
                                     </div>
@@ -230,15 +230,15 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>Contact Number *</label>
                                     <div class="form-group">
+                                        <label>Contact Number *</label>
                                         <input class="form-control" type="text" name="Contact" placeholder="Enter phone number" value="<?php echo $contact; ?>"></input>
                                         <div style="color: red"><?php echo $errors['contact']; ?></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>E-mail ID *</label>
                                     <div class="form-group">
+                                        <label>E-mail ID *</label>
                                         <input class="form-control" type="email" name="MemberID" placeholder="E-mail address (will be your Member ID)" value="<?php echo $memberId; ?>"></input>
                                         <div style="color: red"><?php echo $errors['memberId']; ?></div>
                                     </div>
@@ -246,15 +246,15 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>Password *</label>
                                     <div class="form-group">
+                                        <label>Password *</label>
                                         <input class="form-control" type="password" name="Password" placeholder="Enter your password" value="<?php echo $password; ?>"></input>
                                         <div style="color: red"><?php echo $errors['password']; ?></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Confirm Password *</label>
                                     <div class="form-group">
+                                        <label>Confirm Password *</label>
                                         <input class="form-control" type="password" name="ConPassword" placeholder="Enter your password again" value="<?php echo $conPassword; ?>"></input>
                                         <div style="color: red"><?php echo $errors['conPassword']; ?></div>
                                     </div>
@@ -262,8 +262,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label>State</label>
                                     <div class="form-group">
+                                        <label>State</label>
                                         <select class="form-control" name="State">
                                             <option value="">Select state</option>
                                             <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -298,14 +298,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <label>City</label>
                                     <div class="form-group">
+                                        <label>City</label>
                                         <input class="form-control" type="text" name="City" placeholder="Enter city" value="<?php echo $city; ?>"></input>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <label>Pin Code</label>
                                     <div class="form-group">
+                                        <label>Pin Code</label>
                                         <input class="form-control" type="number" name="PinCode" placeholder="Enter pincode" value="<?php echo $pincode; ?>"></input>
                                     </div>
                                 </div>

@@ -8,7 +8,7 @@
         <hr />
         <a class="nav-link" href="admindashboard.php" style="color: white; cursor: pointer">Dashboard</a>
         <hr />
-        <a class="nav-link" href="adminbookissuing.php" style="color: white; cursor: pointer">Book Issuing</a>
+        <a class="nav-link" href="adminbookissue.php" style="color: white; cursor: pointer">Book Issuing</a>
         <hr />
         <a class="nav-link" href="adminbookinventory.php" style="color: white; cursor: pointer">Book Inventory</a>
         <hr />
